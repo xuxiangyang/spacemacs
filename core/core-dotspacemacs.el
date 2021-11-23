@@ -41,7 +41,7 @@ their configuration.")
        (no-env-dir-default (expand-file-name
                             (concat user-home-directory
                                     ".spacemacs.d/")))
-       (default-init (expand-file-name ".spacemacs" user-home-directory)))
+       (default-init (expand-file-name ".emacs.d/spacemacs" user-home-directory)))
   (defconst dotspacemacs-directory
     (cond
      ((and env (file-exists-p env-dir)) env-dir)
