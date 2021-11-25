@@ -386,7 +386,7 @@ values."
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
+   dotspacemacs-search-tools '("rg" "ag" "pt" "ack" "grep")
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
@@ -408,12 +408,17 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
   ; 国内源
-  (setq configuration-layer-elpa-archives
-        '(("melpa-cn" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
-          ("org-cn"   . "http://mirrors.ustc.edu.cn/elpa/org/")
-          ("gnu-cn"   . "http://mirrors.ustc.edu.cn/elpa/gnu/")
-          ("nongnu"   . "https://elpa.nongnu.org/nongnu/")
-          ))
+  ; (setq configuration-layer-elpa-archives
+  ;   '(("melpa-cn" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
+  ;     ("org-cn"   . "http://mirrors.cloud.tencent.com/elpa/org/")
+  ;     ("gnu-cn"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")
+  ;     ("nongnu"   . "https://elpa.nongnu.org/nongnu/")
+  ;     ))
+  (setq url-proxy-services
+     '(("no_proxy" . "^\\(localhost\\|10.*\\)")
+       ("http" . "127.0.0.1:1087")
+       ("https" . "127.0.0.1:1087")))
+
   (if (daemonp)
       (progn
         (setq default-directory (concat (getenv "HOME") "/"))
