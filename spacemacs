@@ -32,20 +32,25 @@ values."
    dotspacemacs-configuration-layers
    '(
      (javascript :variables
+                 javascript-backend 'lsp
+                 javascript-import-tool 'import-js
                  javascript-fmt-tool 'prettier
                  javascript-fmt-on-save t
+                 node-add-modules-path t
+                 js2-include-node-externs t
                  )
      (typescript :variables
-                 typescript-fmt-on-save t
+                 typescript-backend 'lsp
                  typescript-fmt-tool 'prettier
+                 typescript-fmt-on-save t
+                 typescript-linter 'eslint
+                 typescript-indent-level 2
                  )
      react
      (vue :variables
           )
      ;; (node :variables node-add-modules-path t)
      tern
-     emoji
-     web-beautify
      (html :variables
            web-mode-enable-auto-pairing t
            web-mode-enable-auto-closing t
@@ -641,25 +646,6 @@ See `org-capture-templates' for more information."
     ("go"    . "\\.tmpl\\'")
     ))
 
-  (eval-after-load 'js2-mode
-    '(add-hook 'js2-mode-hook
-               (lambda ()
-                 (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
-
-  (eval-after-load 'json-mode
-    '(add-hook 'json-mode-hook
-               (lambda ()
-                 (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
-
-  (eval-after-load 'web-mode
-  '(add-hook 'web-mode-hook
-             (lambda ()
-               (add-hook 'before-save-hook 'web-beautify-html-buffer t t))))
-
-  (eval-after-load 'css-mode
-    '(add-hook 'css-mode-hook
-               (lambda ()
-                 (add-hook 'before-save-hook 'web-beautify-css-buffer t t))))
   ;; end of user-config
   )
 
