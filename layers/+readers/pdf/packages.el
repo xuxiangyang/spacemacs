@@ -85,8 +85,6 @@
         (kbd "C-u") 'pdf-view-scroll-down-or-previous-page
         (kbd "C-d") 'pdf-view-scroll-up-or-next-page
         (kbd "``")  'pdf-history-backward
-        (kbd "C-o") 'pdf-history-backward
-        (kbd "C-i") 'pdf-history-forward
         "["  'pdf-history-backward
         "]"  'pdf-history-forward
         "'" 'pdf-view-jump-to-register
@@ -110,7 +108,7 @@
         "gh"               'pdf-outline-up-heading
         "gg"               'beginning-of-buffer
         "G"                'pdf-outline-end-of-buffer
-        "TAB"              'outline-toggle-children
+        (kbd "<tab>")      'outline-toggle-children
         "RET"              'pdf-outline-follow-link
         (kbd "M-RET")      'pdf-outline-follow-link-and-quit
         "f"                'pdf-outline-display-link
