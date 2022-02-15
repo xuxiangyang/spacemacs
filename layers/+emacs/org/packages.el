@@ -675,6 +675,7 @@ Headline^^            Visit entry^^               Filter^^                    Da
       (spacemacs/declare-prefix-for-mode 'org-mode "miD" "download")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
         "iDy" 'org-download-yank
+        "iDc" 'org-download-clipboard
         "iDs" 'org-download-screenshot))))
 
 (defun org/init-org-jira ()
