@@ -148,11 +148,13 @@ values."
           org-enable-notifications t
           org-wild-notifier-alert-time '(0)
           org-agenda-span 'day
+          org-download-image-dir "~/org/download"
           alert-default-style 'notifier
           )
      (c-c++ :variables
            c-c++-backend 'lsp-clangd
            )
+     eww
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
