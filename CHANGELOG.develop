@@ -547,6 +547,7 @@ Other:
   - =.gitignore= now ignores tag files and the bbdb database.
   - =.gitignore= now ignores org-journal-cache-file (thanks to Benjamin Hipple)
   - =.gitignore= now ignores image-dired-dir (thanks to Alfonso Montero)
+  - =.gitignore= now ignores devdocs (thanks to Alfonso Montero)
   - Added =vim-style-visual-feedback= and =hybrid-style-visual-feedback= style
     variables to enable =evil-goggles= pulse in the Vim and Hybrid editing
     styles, respectively; disabled by default (thanks to Sylvain Benner)
@@ -1474,6 +1475,7 @@ Other:
   - Handled buffer move/select/swap to last window nr +1 (thanks to duianto)
   - Set =evil-undo-system= to =undo-tree= (thanks to duianto)
   - Checked that =evil-undo-system= exists before it's called (thanks to khjcph)
+  - Fixed ~SPC w TAB~ golden-ratio resizing.
 *** Layer changes and fixes
 **** Agda
 - Fixes
@@ -2171,6 +2173,8 @@ Other:
   - Restore magit transient args between sessions (thanks to duianto)
 - Improvements:
   - Added orgit-forge (thanks to Ag Ibragimov)
+  - Add Magit Forge configuration documentation & basic git configuration
+    (thanks to practicalli-john)
 **** Gnus
 - Key bindings:
   - Added ~g r~ for =gnus-group-get-new-news= (thanks to Matthew Leach)
@@ -3086,6 +3090,7 @@ files (thanks to Daniel Nicolai)
   =org-insert-structure-template= commands (thanks to Andriy Kmit')
 - Added =ox-asciidoc= as org export backend (thanks to Christian "West" Westrom)
 - Fix org-roam v2 compatibility (thanks to Alex Kapranoff and Caleb Rogers)
+- Fix =space-doc.el= to use cl-return (thanks to practicalli-john)
 **** Osx
 - Key bindings:
   - Added key bindings to use ~command-1..9~ for selecting window
@@ -3429,6 +3434,8 @@ files (thanks to Daniel Nicolai)
     - ~SPC c s d~ Copy rpms to the phone
     - ~SPC c s i~ Install rpms into target
 **** Scala
+- Shortcut key for compiling tests in SBT without running them (~Test / compile~)
+  (thanks to Keith Pinson)
 - Shortcut keys for common/standard SBT commands (~scalafmtAll~, ~compile~ and ~test~)
   (thanks to Keith Pinson)
 - Remove long-deprecated Ensime support (thanks to Keith Pinson)
