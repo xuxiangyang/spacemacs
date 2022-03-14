@@ -69,3 +69,13 @@
               "jto" 'pony-test-open
               "jtt" 'pony-test
               "jtu" 'pony-test-up))))
+
+
+(defun django/post-init-pony-mode ()
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (if (projectile-project-p)
+                  (if (file-exists-p (concat (projectile-project-root) "manage.py"))
+                      (web-mode-set-engine "django")
+                    )
+                ))))

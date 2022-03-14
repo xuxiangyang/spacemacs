@@ -113,6 +113,15 @@ values."
            ruby-backend 'robe
            )
      ruby-on-rails
+     (python :variables
+             python-backend 'anaconda
+             python-formatter 'yapf
+             python-format-on-save t
+             python-sort-imports-on-save t
+             python-pipenv-activate t
+             ;; python-fill-column 120
+             )
+     django
      (auto-completion :variables
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-sort-by-usage t
@@ -422,9 +431,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;     ("nongnu"   . "https://elpa.nongnu.org/nongnu/")
   ;     ))
   (setq url-proxy-services
-     '(("no_proxy" . "^\\(localhost\\|10.*\\)")
-       ("http" . "127.0.0.1:1087")
-       ("https" . "127.0.0.1:1087")))
+        '(("no_proxy" . "^\\(localhost\\|127.0.0.1\\|10.*\\)")
+          ("http" . "127.0.0.1:1087")
+          ("https" . "127.0.0.1:1087")))
 
   (if (daemonp)
       (progn
@@ -482,6 +491,14 @@ you should place your code here."
                  )
                )
     )
+  (eval-after-load 'lsp-mode
+    '(lsp-register-custom-settings
+       '(
+          ("gopls.allExperiments" t t)
+        )
+      )
+    )
+
 
   ;; Ruby相关配置
   ;; 重写 https://github.com/senny/rvm.el/blob/master/rvm.el#L398，rvm 配置了BUNDLE_PATH ，会导致emacs下载的gem路径和console中的路径不一致，带来问题
@@ -501,6 +518,7 @@ you should place your code here."
 
   ;; 搜索不要高亮
   (setq-default evil-ex-search-highlight-all nil)
+  (setq-default evil-insert-state-cursor 'box)
 
   ;; 全局开启补全
   (global-company-mode)
@@ -647,6 +665,13 @@ See `org-capture-templates' for more information."
   (setq web-mode-engines-alist '(
     ("go"    . "\\.tmpl\\'")
     ))
+
+  ;; python
+  (with-eval-after-load 'python-mode
+    (add-hook 'python-mode ((lambda () (interactive "") )
+                            add-hook 'before-save-hook #'spacemacs/python-remove-unused-imports
+                            ))
+    )
 
   ;; end of user-config
   )
