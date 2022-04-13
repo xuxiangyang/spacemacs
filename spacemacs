@@ -163,6 +163,16 @@ values."
      (c-c++ :variables
            c-c++-backend 'lsp-clangd
            )
+     (java :variables
+           lsp-java-java-path "/Users/xxy/Library/Java/JavaVirtualMachines/openjdk-17.0.2/Contents/Home/bin/java"
+           lsp-java-configuration-runtimes '[
+                                             (:name "JavaSE-11"
+                                                    :path "/Users/xxy/Library/Java/JavaVirtualMachines/corretto-11.0.14.1/Contents/Home")
+                                             (:name "JavaSE-17"
+                                                    :path "/Users/xxy/Library/Java/JavaVirtualMachines/openjdk-17.0.2/Contents/Home"
+                                                    :default t)
+                                             ]
+           )
      eww
      ;; version-control
      )
