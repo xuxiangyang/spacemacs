@@ -89,6 +89,7 @@
       - [[#bibtex][BibTeX]]
       - [[#csv][CSV]]
       - [[#dhall][Dhall]]
+      - [[#fountain][Fountain]]
       - [[#graphviz][Graphviz]]
       - [[#html][HTML]]
       - [[#json][JSON]]
@@ -245,6 +246,7 @@
   - [[#terraform][Terraform]]
   - [[#tide-layer][Tide Layer]]
   - [[#tmux][Tmux]]
+  - [[#translate-layer][Translate Layer]]
   - [[#transmission][Transmission]]
   - [[#tree-sitter][Tree-sitter]]
   - [[#vagrant][Vagrant]]
@@ -254,7 +256,6 @@
   - [[#evil-better-jumper][Evil-better-jumper]]
   - [[#evil-commentary][Evil-commentary]]
   - [[#evil-snipe][Evil-snipe]]
-  - [[#vim-empty-lines][Vim-empty-lines]]
   - [[#vinegar][Vinegar]]
 - [[#web-services][Web services]]
   - [[#confluence][Confluence]]
@@ -929,7 +930,7 @@ Features:
 - Evilification of various modes if the editing style is =vim= or =hybrid=
 - Improves the comment function to be able to also do the inverse operation
 - Persistent highlight of searched text with =evil-search-highlight-persist=
-- Display tildes in non-buffer area with =vi-tilde-fringe=
+- Display tildes in non-buffer area with =vim-empty-lines-mode=
 - Add =evil-collection=
 
 ** Spacemacs-language
@@ -1271,6 +1272,15 @@ Features:
 *Note:* You will need a ~dhall~ binary on your ~PATH~. Official releases [[https://github.com/dhall-lang/dhall-haskell/releases][can be
 found here]].
 
+**** Fountain
+[[file:+lang/fountain/README.org][+lang/fountain/README.org]]
+
+This layer adds support for the [[https://fountain.io/][fountain]] screenwriting format to Spacemacs.
+
+Features:
+- Fountain files support via [[https://github.com/rnkn/fountain-mode/][fountain-mode]]
+- Confortable writing layout via [[https://github.com/rnkn/olivetti/][olivetti-mode]]
+
 **** Graphviz
 [[file:+lang/graphviz/README.org][+lang/graphviz/README.org]]
 
@@ -1331,6 +1341,7 @@ Features:
 - Auto-completion
 - Tags navigation on ~%~ with [[https://github.com/redguardtoo/evil-matchit][evil-matchit]]
 - Labels, references, citations and index entries management with [[http://www.gnu.org/software/emacs/manual/html_node/reftex/index.html][RefTeX]]
+- LaTeX-specific text objects and much more with [[https://github.com/iyefrat/evil-tex][evil-tex]]
 
 **** Markdown
 [[file:+lang/markdown/README.org][+lang/markdown/README.org]]
@@ -2221,6 +2232,7 @@ Features:
 - Fix a missing import statement with [[https://github.com/anachronic/importmagic.el][importmagic]]
 - Pip package manager with [[https://github.com/brotzeit/pippel][pippel]]
 - Interactive debugger using [[https://github.com/emacs-lsp/dap-mode][dap-mode]]
+- Support for ipython notebook and MATLAB-like cells using using [[https://github.com/astoff/code-cells.el][code-cells]]
 
 **** Racket
 [[file:+lang/racket/README.org][+lang/racket/README.org]]
@@ -2564,12 +2576,16 @@ guide to configuring and using the Git and version control layers.
 ** GitHub
 [[file:+source-control/github/README.org][+source-control/github/README.org]]
 
-This layers adds support for [[http://github.com][GitHub]].
+*This layer is deprecated*.
+
+The layer had support searching for and cloning [[http://github.com][GitHub]] repositories,
+although that did not provide a secure way to store an access token
+to connect to GitHub.
+
+The git layer provides interaction with GitHub and can securely
+store the access token using PGP.
 
 Features:
-- [[https://github.com/magit/forge][forge]]: integration with various forges, such as GitHub and GitLab.
-- [[https://github.com/sshaw/git-link][git-link]]: quickly generate URLs for commits or files.
-- [[https://github.com/dgtized/github-clone.el][github-clone]] allows for easy cloning and forking of repositories.
 - [[https://github.com/seagle0128/grip-mode][grip-mode]] Github-flavored Markdown/Org preview using [[https://github.com/joeyespo/grip][Grip]].
 
 ** Perforce
@@ -3183,6 +3199,16 @@ This layer adds basic =tmux= key bindings to Spacemacs.
 Features:
 - Calling of =tmux= navigation commands directly from Emacs via [[https://github.com/keith/evil-tmux-navigator][evil-tmux-navigator]].
 
+** Translate Layer
+[[file:+tools/translate/README.org][+tools/translate/README.org]]
+
+This layer is designed for Paragraph-oriented minor mode for
+side-by-side document translation workflow.
+
+Features:
+- Paragraph-oriented side-by-side document translation workflow
+- Integrate word/paragraph online translation
+
 ** Transmission
 [[file:+tools/transmission/README.org][+tools/transmission/README.org]]
 
@@ -3264,23 +3290,6 @@ Features:
 - Replacement of evil-surround with a two-character search.
 - Support for alternative scopes for default search operations.
 - Support for alternative motions based on configurable regexps.
-
-** Vim-empty-lines
-[[file:+vim/vim-empty-lines/README.org][+vim/vim-empty-lines/README.org]]
-
-This layer is a drop-in replacement for the =vi-tilde-fringe= mode, for those
-who desire behaviour closer to =vim='s.
-
-It has better compatibility with retina displays, as it uses a text overlay
-using your font, rather than a pixel-art tilde. The empty line indicators are
-overlaid in within the buffer as in =vim=, and not in the fringe. The indicator
-behaviour with trailing empty lines matches =vim='s behaviour.
-
-For details, see the [[https://github.com/jmickelin/vim-empty-lines-mode][vim-empty-lines-mode]] repository.
-
-Features:
-- Emulation of original vim behaviour.
-- Brings you as close to vim as one can be without using vim itself.
 
 ** Vinegar
 [[file:+vim/vinegar/README.org][+vim/vinegar/README.org]]

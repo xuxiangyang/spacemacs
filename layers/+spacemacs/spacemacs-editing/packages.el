@@ -1,6 +1,6 @@
 ;;; packages.el --- Spacemacs Editing Layer packages File
 ;;
-;; Copyright (c) 2012-2021 Sylvain Benner & Contributors
+;; Copyright (c) 2012-2022 Sylvain Benner & Contributors
 ;;
 ;; Author: Sylvain Benner <sylvain.benner@gmail.com>
 ;; URL: https://github.com/syl20bnr/spacemacs
@@ -40,7 +40,7 @@
     pcre2el
     (smartparens :toggle dotspacemacs-activate-smartparens-mode)
     (evil-swap-keys :toggle dotspacemacs-swap-number-row)
-    (spacemacs-whitespace-cleanup :location local)
+    (spacemacs-whitespace-cleanup :location (recipe :fetcher local))
     string-edit
     string-inflection
     multi-line
@@ -539,7 +539,16 @@
             ;; Emacs GC which truncages the undo history very aggresively
             undo-limit 800000
             undo-strong-limit 12000000
-            undo-outer-limit 120000000)
+            undo-outer-limit 120000000
+            undo-tree-history-directory-alist
+            `(("." . ,(let ((dir (expand-file-name "undo-tree-history" spacemacs-cache-directory)))
+                        (if (file-exists-p dir)
+                            (unless (file-accessible-directory-p dir)
+                              (warn "Cannot access directory `%s'.
+ Perhaps you don't have required permissions, or it's not a directory.
+ See variable `undo-tree-history-directory-alist'." dir))
+                          (make-directory dir))
+                        dir))))
       (global-undo-tree-mode))
     :config
     (progn

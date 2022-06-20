@@ -1,6 +1,6 @@
 ;;; packages.el --- coq layer packages file for Spacemacs.
 ;;
-;; Copyright (c) 2012-2021 Sylvain Benner & Contributors
+;; Copyright (c) 2012-2022 Sylvain Benner & Contributors
 ;;
 ;; Author: Jeremy Bi <bixuanxbi@gmail.com>
 ;; URL: https://github.com/syl20bnr/spacemacs
@@ -26,7 +26,7 @@
         (company-coq :requires company)
         proof-general
         smartparens
-        vi-tilde-fringe))
+        vim-empty-lines-mode))
 
 
 (defun coq/init-company-coq ()
@@ -123,7 +123,7 @@
 (defun coq/post-init-smartparens ()
   (add-hook 'coq-mode-hook #'spacemacs//activate-smartparens))
 
-(defun coq/post-init-vi-tilde-fringe ()
-  (spacemacs/add-to-hooks 'spacemacs/disable-vi-tilde-fringe
+(defun coq/post-init-vim-empty-lines-mode ()
+  (spacemacs/add-to-hooks 'spacemacs/disable-vim-empty-lines-mode
                           '(coq-response-mode-hook
                             coq-goals-mode-hook)))
