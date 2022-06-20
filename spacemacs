@@ -38,7 +38,10 @@ values."
                  javascript-fmt-on-save t
                  node-add-modules-path t
                  js2-include-node-externs t
+                 lsp-javascript-preferences-import-module-specifier "relative"
                  )
+     (prettier)
+     (import-js)
      (typescript :variables
                  typescript-backend 'lsp
                  typescript-fmt-tool 'prettier
