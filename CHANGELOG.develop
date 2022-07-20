@@ -100,6 +100,8 @@ the [[file:CHANGELOG.org][CHANGELOG.org]] file.
 - The property =:powerline-scale= of variable =dotspacemacs-default-font= has
   been removed and replaced by the property =:separator-scale= used in the new
   dotfile variable =dotspacemacs-mode-line-theme=.
+- If =dotspacemacs-enable-paste-transient-state= is enabled, whitespace is
+  removed from the kill ring for better ergonomics. (thanks to BenedictHW)
 **** Layers
 ***** Spacemacs distribution layers
 - Key bindings:
@@ -127,6 +129,8 @@ the [[file:CHANGELOG.org][CHANGELOG.org]] file.
     (thanks to Seong Yong-ju)
   - Changed ~SPC t t m~ from ~timeclock-modeline-display~ which was deprecated
     in Emacs 24.3 to ~timeclock-mode-line-display~ (thanks to Zach Pearson)
+  - Added =vim-style-enable-undo-region= style variables to enable undo-region
+    in Vim editing style; disabled by default. (thanks to Benedict HW)
 - Other:
   - Support for multiple cursors using =evil-mc= is now encapsulated in the
     =multiple-cursors= layer (thanks to Codruț Constantin Gușoi)
@@ -344,8 +348,6 @@ In org-agenda-mode
 - Key bindings:
   - Add ~J/K~ to scroll up/down (or next/previous node) in Info-mode
   - Add ~o~ to link-hint-open-link in woman-mode
-***** Spacemacs-evil
-- Replace =vi-tilde-fringe= package with =vim-empty-lines-mode=
 ***** Shaders
 - =shaders= layer has been moved to =gpu= layer.
 ***** Syntax checking
@@ -378,8 +380,6 @@ In org-agenda-mode
     Constantin Gușoi)
   - Add ~SPC g f m~ for ~magit-file-dispatch~ (thanks to Ag Ibragimov and Ilya Grigoriev)
 - Removed [[https://github.com/defunkt/gist.el][gist.el]] due to it being broken and unmaintained (thanks to Robby O'Connor)
-***** Vim Empty Lines
-- The =vim-empty-lines= layer has been deleted and moved to the =spacemacs-evil= layer. (thanks to Ray Wang)
 ***** YAML
 - Added LSP support (thanks to Seong Yong-ju)
 ***** ycmd
@@ -506,7 +506,6 @@ In org-agenda-mode
 - extra-langs (replaced by =ad-hoc= layers)
 - flow-type (replaced by LSP in =javascript= layer)
 - ycmd (moved to =c-c++=)
-- vim-empty-lines (moved to =spacemacs-evil=)
 *** Dotfile changes
 - Added type bases validation for .spacemacs variables.
 - New Variables:
@@ -549,7 +548,6 @@ In org-agenda-mode
   - New variable =dotspacemacs-scroll-bar-while-scrolling= (thanks to duianto)
   - New variable =dotspacemacs-show-startup-list-numbers= (thanks to duianto)
   - New variable =dotspacemacs-startup-banner-scale= (thanks to Daniel)
-  - New variable =dotspacemacs-evil-show-empty-line-indicators= (thanks to Ray Wang)
 - Removed Variables:
   - Removed unused variable =dotspacemacs-verbose-loading= from
     =.spacemacs.template= (thanks to Ying Qu)

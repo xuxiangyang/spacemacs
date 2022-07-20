@@ -39,16 +39,13 @@
         evil-matchit
         evil-numbers
         evil-surround
-        ;; Temporarily disabled, pending the resolution of
-        ;; https://github.com/7696122/evil-terminal-cursor-changer/issues/8
-        ;; evil-terminal-cursor-changer
         evil-textobj-line
         evil-tutor
         (evil-unimpaired :location (recipe :fetcher local))
         evil-visual-mark-mode
         evil-visualstar
         (hs-minor-mode :location built-in)
-        (vim-empty-lines-mode :toggle dotspacemacs-evil-show-empty-line-indicators)
+        vi-tilde-fringe
         eldoc))
 
 (defun spacemacs-evil/init-evil-anzu ()
@@ -369,13 +366,6 @@
     (progn
       (global-evil-surround-mode 1))))
 
-(defun spacemacs-evil/init-evil-terminal-cursor-changer ()
-  (use-package evil-terminal-cursor-changer
-    :if (not (display-graphic-p))
-    :init (setq evil-visual-state-cursor 'box
-                evil-insert-state-cursor 'bar
-                evil-emacs-state-cursor 'hbar)))
-
 (defun spacemacs-evil/init-evil-textobj-line ()
   ;; No laziness here, the line text object should be available right away.
   (use-package evil-textobj-line))
@@ -417,32 +407,27 @@
 (defun spacemacs-evil/init-hs-minor-mode ()
   (add-hook 'prog-mode-hook 'spacemacs//enable-hs-minor-mode))
 
-(defun spacemacs-evil/init-vim-empty-lines-mode ()
+(defun spacemacs-evil/init-vi-tilde-fringe ()
   (spacemacs|do-after-display-system-init
-   (use-package vim-empty-lines-mode
+   (use-package vi-tilde-fringe
      :init
-     (spacemacs/add-to-hooks (lambda () (vim-empty-lines-mode -1))
-                             '(comint-mode-hook
-                               eshell-mode-hook
-                               eww-mode-hook
-                               shell-mode-hook
-                               term-mode-hook))
-     :config
      (progn
-       (spacemacs|hide-lighter vim-empty-lines-mode)
-       (global-vim-empty-lines-mode)
-       (spacemacs|add-toggle vim-empty-lines-mode
-         :mode global-vim-empty-lines-mode
+       (global-vi-tilde-fringe-mode)
+       (spacemacs|add-toggle vi-tilde-fringe
+         :mode global-vi-tilde-fringe-mode
          :documentation
-         "Display an overlay of ~ on empty lines."
+         "Globally display a ~ on empty lines in the fringe."
          :evil-leader "T~")
-       ;; Don't enable it where it is detrimental.
-       (dolist (x (list spacemacs-buffer-name
-                        "*Messages*"))
-         (with-current-buffer x (vim-empty-lines-mode -1)))
-       (add-hook 'which-key-init-buffer-hook (lambda () (vim-empty-lines-mode -1)))
+       ;; don't enable it on some special buffers
+       (with-current-buffer spacemacs-buffer-name
+         (spacemacs/disable-vi-tilde-fringe))
+       (add-hook 'which-key-init-buffer-hook 'spacemacs/disable-vi-tilde-fringe)
        ;; after a major mode is loaded, check if the buffer is read only
-       ;; if so, disable vim-empty-lines-mode
-       (add-hook 'after-change-major-mode-hook (lambda ()
-                                                 (when buffer-read-only
-                                                   (vim-empty-lines-mode -1))))))))
+       ;; if so, disable vi-tilde-fringe-mode
+       (add-hook 'after-change-major-mode-hook
+                 'spacemacs/disable-vi-tilde-fringe-read-only)
+       ;; TODO move this hook if/when we have a layer for eww
+       (spacemacs/add-to-hooks 'spacemacs/disable-vi-tilde-fringe
+                               '(eww-mode-hook)))
+     :config
+     (spacemacs|hide-lighter vi-tilde-fringe-mode))))
