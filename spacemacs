@@ -176,7 +176,15 @@ values."
                                                     :default t)
                                              ]
            )
+     (kotlin :variables
+             kotlin-backend 'lsp
+             kotlin-lsp-jar-path "/Users/xxy/Library/Java/JavaVirtualMachines/kotlin-server-1.3.1/bin/kotlin-language-server"
+             )
      eww
+     (dart :variables
+           lsp-enable-on-type-formatting t
+           lsp-dart-sdk-dir "~/Documents/flutter_project/sdk/3.0.5/bin/cache/dart-sdk/"
+           )
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
