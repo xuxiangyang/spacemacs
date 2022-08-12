@@ -51,7 +51,7 @@ their configuration.")
   (let* ((spacemacs-dir-env (getenv "SPACEMACSDIR"))
          (spacemacs-init (if spacemacs-dir-env
                              (expand-file-name "init.el" spacemacs-dir-env)
-                           (expand-file-name ".spacemacs" user-home-directory))))
+                           (expand-file-name ".emacs.d/spacemacs" user-home-directory))))
       (if (file-regular-p spacemacs-init)
           spacemacs-init
         (let ((fallback-init (expand-file-name ".spacemacs.d/init.el"
@@ -59,10 +59,10 @@ their configuration.")
           (if (file-regular-p fallback-init)
               fallback-init
             spacemacs-init))))
-  "Filepath to Spacemacs configuration file (defaults to ~/.spacemacs).
+  "Filepath to Spacemacs configuration file (defaults to ~/.emacs.d/spacemacs).
 - If environment variable SPACEMACSDIR is set and SPACEMACSDIR/init.el
   exists, use that value.
-- Otherwise use ~/.spacemacs if it exists.
+- Otherwise use ~/.emacs.d/spacemacs if it exists.
 - Otherwise use $HOME/.spacemacs.d/init.el if it exists.")
 
 (spacemacs|defc dotspacemacs-distribution 'spacemacs
