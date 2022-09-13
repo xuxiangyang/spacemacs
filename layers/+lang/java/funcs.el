@@ -44,6 +44,10 @@
     ('meghanada (spacemacs//java-setup-meghanada-flycheck))
     ('lsp (spacemacs//java-setup-lsp-flycheck))))
 
+(defun spacemacs//java-setup-organize-imports ()
+  "setup organize import"
+  (when (eq java-backend 'lsp) (add-hook 'before-save-hook 'lsp-organize-imports)))
+
 
 ;; meghanada
 
