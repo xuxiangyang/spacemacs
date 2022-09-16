@@ -29,3 +29,15 @@
   "The backend to use for IDE features.
 Possible values are `lsp' and `meghanada'.
 If `nil' then `meghanada' is the default backend unless `lsp' layer is used.")
+
+(defvar lsp-java-lombok/enabled t
+  "Indicates the LSP server should be started with Lombok.")
+
+(defvar lsp-java-lombok/version nil
+  "When non-nil, use the specified Lombok version, otherwise use the latest.")
+
+(defvar lsp-java-lombok/jar-url-base "https://projectlombok.org/downloads/"
+  "The base path to download Lombok jars from.")
+
+(defvar lsp-java-lombok/dir user-emacs-directory
+  "The path on disk where lombok jars are saved.")

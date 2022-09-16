@@ -134,3 +134,40 @@
   "Show sub type hierarchy."
   (interactive)
   (lsp-java-type-hierarchy 0))
+
+(defun lsp-java-lombok/jar-file ()
+  "Get the filename for the Lombok jar."
+  (concat "lombok"
+          (when lsp-java-lombok/version "-")
+          lsp-java-lombok/version
+          ".jar"))
+
+(defun lsp-java-lombok/jar-path ()
+  "Generate the path on disk for the Lombok jar."
+  (concat (expand-file-name user-emacs-directory) ".cache/" (lsp-java-lombok/jar-file)))
+
+(defun lsp-java-lombok/download-jar ()
+  "Download the latest lombok jar for use with LSP."
+  (let* ((lombok-url (url-generic-parse-url lsp-java-lombok/jar-url-base))
+         (base-path (file-name-as-directory (url-filename lombok-url)))
+         (file-path (concat base-path (lsp-java-lombok/jar-file))))
+    (setf (url-filename lombok-url) file-path)
+    (url-copy-file lombok-url (lsp-java-lombok/jar-path))))
+
+(defun lsp-java-lombok/append-vmargs ()
+  "Apply lombok args to lsp-java-vmargs."
+  (setq lsp-java-vmargs
+        (append lsp-java-vmargs
+                (list (concat "-javaagent:" (lsp-java-lombok/jar-path))))))
+
+(defun lsp-java-lombok/setup ()
+  "Download Lombok if it hasn't been downloaded already."
+  (when (not (file-exists-p (lsp-java-lombok/jar-path)))
+    (message "Could not find lombok for lsp-java.  Downloading...")
+    (lsp-java-lombok/download-jar)))
+
+(defun lsp-java-lombok/init ()
+  "Initialize lsp-java-lombok."
+  (when lsp-java-lombok/enabled
+    (lsp-java-lombok/setup)
+    (lsp-java-lombok/append-vmargs)))

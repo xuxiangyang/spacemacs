@@ -154,6 +154,7 @@
     :if (eq java-backend 'lsp)
     :config
     (progn
+      (lsp-java-lombok/init)
       ;; key bindings
       (dolist (prefix '(("mc" . "compile/create")
                         ("mgk" . "type hierarchy")
