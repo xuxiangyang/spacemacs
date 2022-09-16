@@ -89,7 +89,12 @@ values."
            helm-grep-split-line-regexp "^\\([[:lower:][:upper:]]?:?.*?\\):\\([0-9]+\\)[:-]\\(.*\\)"
            )
      smex
-     neotree
+     (treemacs :variables
+               treemacs-use-git-mode 'deferred
+               treemacs-lock-width t
+               treemacs-hide-gitignored-files-mode t
+               treemacs-project-follow-mode t
+               )
      (lsp :variables
           lsp-auto-guess-root t
           lsp-enable-semantic-highlighting t
@@ -167,18 +172,13 @@ values."
            c-c++-backend 'lsp-clangd
            )
      (java :variables
-           lsp-java-java-path "/Users/xxy/Library/Java/JavaVirtualMachines/openjdk-17.0.2/Contents/Home/bin/java"
-           lsp-java-configuration-runtimes '[
-                                             (:name "JavaSE-11"
-                                                    :path "/Users/xxy/Library/Java/JavaVirtualMachines/corretto-11.0.14.1/Contents/Home")
-                                             (:name "JavaSE-17"
-                                                    :path "/Users/xxy/Library/Java/JavaVirtualMachines/openjdk-17.0.2/Contents/Home"
-                                                    :default t)
-                                             ]
            )
      (kotlin :variables
              kotlin-backend 'lsp
-             kotlin-lsp-jar-path "/Users/xxy/Library/Java/JavaVirtualMachines/kotlin-server-1.3.1/bin/kotlin-language-server"
+             )
+     (groovy :variables
+             groovy-backend 'lsp
+             groovy-lsp-jar-path "~/.emacs.d/private/groovy/groovy-language-server-all.jar"
              )
      eww
      (dart :variables
@@ -453,8 +453,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;     ))
   (setq url-proxy-services
         '(("no_proxy" . "^\\(localhost\\|127.0.0.1\\|10.*\\)")
-          ("http" . "127.0.0.1:1087")
-          ("https" . "127.0.0.1:1087")))
+          ("http" . "127.0.0.1:10087")
+          ("https" . "127.0.0.1:10087")))
 
   (if (daemonp)
       (progn
