@@ -156,7 +156,8 @@
     (progn
       (lsp-java-lombok/init)
       ;; key bindings
-      (dolist (prefix '(("mc" . "compile/create")
+      (dolist (prefix '(("m;" . "add semicolon")
+                        ("mc" . "compile/create")
                         ("mgk" . "type hierarchy")
                         ("mra" . "add/assign")
                         ("mrc" . "create/convert")
@@ -166,6 +167,7 @@
         (spacemacs/declare-prefix-for-mode
           'java-mode (car prefix) (cdr prefix)))
       (spacemacs/set-leader-keys-for-major-mode 'java-mode
+        ";" 'spacemacs//java-add-semicolon
         "wu"  'lsp-java-update-project-configuration
 
         ;; refactoring

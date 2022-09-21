@@ -48,6 +48,16 @@
   "setup organize import"
   (when (eq java-backend 'lsp) (add-hook 'before-save-hook 'lsp-organize-imports)))
 
+
+(defun spacemacs//java-add-semicolon ()
+  "add semicolon and to to newline keybind"
+  (interactive)
+  (evil-force-normal-state)
+  (evil-append-line 1)
+  (insert ";")
+  (evil-open-below 1)
+)
+
 
 ;; meghanada
 
@@ -171,3 +181,4 @@
   (when lsp-java-lombok/enabled
     (lsp-java-lombok/setup)
     (lsp-java-lombok/append-vmargs)))
+
