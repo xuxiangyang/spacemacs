@@ -185,6 +185,7 @@ values."
            lsp-enable-on-type-formatting t
            lsp-dart-sdk-dir "~/Documents/flutter_project/sdk/3.0.5/bin/cache/dart-sdk/"
            )
+     imenu-list
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
