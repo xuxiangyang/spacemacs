@@ -76,6 +76,7 @@ values."
           sql-capitalize-keywords t
           sql-backend nil
           sql-auto-indent nil
+          sqlfmt-executable "/Users/xxy/.emacs.d/private/bin/sqlfmt"
           )
      (helm :variables
            helm-enable-auto-resize t
@@ -166,6 +167,9 @@ values."
           org-wild-notifier-alert-time '(0)
           org-agenda-span 'day
           org-download-image-dir "~/org/download"
+          org-enable-org-journal-support t
+          org-journal-dir "~/org/journal/"
+          org-enable-org-brain-support t
           alert-default-style 'notifier
           )
      (c-c++ :variables
@@ -182,8 +186,9 @@ values."
              )
      eww
      (dart :variables
+           dart-backend 'lsp
            lsp-enable-on-type-formatting t
-           lsp-dart-sdk-dir "~/Documents/flutter_project/sdk/3.0.5/bin/cache/dart-sdk/"
+           lsp-dart-sdk-dir "~/Documents/flutter_project/flutter/bin/cache/dart-sdk/"
            )
      imenu-list
      ;; version-control
