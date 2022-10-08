@@ -72,6 +72,7 @@
     (progn
       (add-hook 'java-mode-local-vars-hook #'spacemacs//java-setup-backend)
       (add-hook 'java-mode-local-vars-hook #'spacemacs//java-setup-organize-imports)
+      (c-set-offset 'arglist-intro '+)
       (put 'java-backend 'safe-local-variable 'symbolp))))
 
 (defun java/init-maven-test-mode ()
