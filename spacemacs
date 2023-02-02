@@ -462,8 +462,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;    ))
   (setq url-proxy-services
         '(("no_proxy" . "^\\(localhost\\|127.0.0.1\\|10.*\\)")
-          ("http" . "127.0.0.1:10087")
-          ("https" . "127.0.0.1:10087")))
+          ("http" . "127.0.0.1:7890")
+          ("https" . "127.0.0.1:7890")))
 
   (if (daemonp)
       (progn
