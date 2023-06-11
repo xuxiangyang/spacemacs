@@ -332,12 +332,13 @@
         "gHt" 'smeargle))))
 
 (defun git/pre-init-transient ()
-  (setq transient-history-file (expand-file-name "transient/history.el"
+  (setq-default transient-history-file (expand-file-name "transient/history.el"
                                                  spacemacs-cache-directory))
-  (setq transient-levels-file (expand-file-name "transient/levels.el"
+  (setq-default transient-levels-file (expand-file-name "transient/levels.el"
                                                 spacemacs-cache-directory))
-  (setq transient-values-file (expand-file-name "transient/values.el"
-                                                spacemacs-cache-directory)))
+  ;; Values are the users saved preferences so they should persist.
+  (setq-default transient-values-file (expand-file-name "transient/values.el"
+                                                        dotspacemacs-directory)))
 
 (defun git/init-transient ()
   (use-package transient
@@ -348,15 +349,16 @@
     :after magit
     :init
     (progn
-      (setq forge-database-file (concat spacemacs-cache-directory
-                                        "forge-database.sqlite")
+      (setq forge-database-file (expand-file-name "forge-database.sqlite"
+                                                  spacemacs-cache-directory)
             forge-add-default-bindings nil)
       (spacemacs/set-leader-keys-for-major-mode 'forge-topic-mode
         "a" 'forge-edit-topic-assignees
         "c" 'forge-create-post
         "C" 'forge-checkout-pullreq
         "b" 'forge-browse-topic
-        "d" 'forge-delete-comment
+        "D" 'forge-delete-comment
+        "d" 'forge-post-toggle-draft
         "e" 'forge-edit-post
         "m" 'forge-edit-topic-marks
         "M" 'forge-create-mark

@@ -34,7 +34,6 @@
     flycheck
     ggtags
     helm-cscope
-    helm-gtags
     (helm-pydoc :requires helm)
     importmagic
     live-py-mode
@@ -169,9 +168,6 @@
 
 (defun python/post-init-counsel-gtags ()
   (spacemacs/counsel-gtags-define-keys-for-mode 'python-mode))
-
-(defun python/post-init-helm-gtags ()
-  (spacemacs/helm-gtags-define-keys-for-mode 'python-mode))
 
 (defun python/post-init-ggtags ()
   (add-hook 'python-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
@@ -452,7 +448,11 @@
 
       ;; add this optional key binding for Emacs user, since it is unbound
       (define-key inferior-python-mode-map
-        (kbd "C-c M-l") 'spacemacs/comint-clear-buffer))))
+        (kbd "C-c M-l") 'spacemacs/comint-clear-buffer)
+      ;; setup the global variables for python shell
+      (spacemacs//python-setup-shell default-directory)
+      (dolist (x '(python-shell-interpreter python-shell-interpreter-args))
+        (set-default-toplevel-value x (symbol-value x))))))
 
 (defun python/post-init-semantic ()
   (when (configuration-layer/package-used-p 'anaconda-mode)

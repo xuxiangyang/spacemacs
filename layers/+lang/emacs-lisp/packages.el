@@ -39,7 +39,6 @@
     flycheck-package
     ggtags
     counsel-gtags
-    helm-gtags
     (ielm :location built-in)
     (inspector :location (recipe
                           :fetcher github
@@ -312,9 +311,6 @@
 (defun emacs-lisp/post-init-counsel-gtags ()
   (spacemacs/counsel-gtags-define-keys-for-mode 'emacs-lisp-mode))
 
-(defun emacs-lisp/post-init-helm-gtags ()
-  (spacemacs/helm-gtags-define-keys-for-mode 'emacs-lisp-mode))
-
 (defun emacs-lisp/post-init-ggtags ()
   (add-hook 'emacs-lisp-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
 
@@ -351,7 +347,8 @@
 
 (defun emacs-lisp/init-emr ()
   (use-package emr
-    :config
+    :defer t
+    :init
     (let ((key-binding-prefixes
            '(("mr" . "refactor")
              ("mrd" . "delete")

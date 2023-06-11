@@ -27,7 +27,7 @@
     geiser
     ggtags
     counsel-gtags
-    helm-gtags
+    org
     (geiser-chez    :toggle (memq 'chez    scheme-implementations))
     (geiser-chibi   :toggle (memq 'chibi   scheme-implementations))
     (geiser-chicken :toggle (memq 'chicken scheme-implementations))
@@ -148,8 +148,9 @@
 (defun scheme/post-init-counsel-gtags ()
   (spacemacs/counsel-gtags-define-keys-for-mode 'scheme-mode))
 
-(defun scheme/post-init-helm-gtags ()
-  (spacemacs/helm-gtags-define-keys-for-mode 'scheme-mode))
+(defun scheme/pre-init-org ()
+  (spacemacs|use-package-add-hook org
+    :post-config (add-to-list 'org-babel-load-languages '(scheme . t))))
 
 (defun scheme/init-geiser-chez ()
   (use-package geiser-chez

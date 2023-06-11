@@ -31,6 +31,7 @@
                                        "*"   "search project w/input"
                                        "/"   "search project"
                                        "?"   "show keybindings"
+                                       "$"   "AI"
                                        "a"   "applications"
                                        "ac"  "chat"
                                        "ae"  "email"
@@ -66,6 +67,7 @@
                                        "p"   "projects"
                                        "q"   "quit"
                                        "r"   "registers/rings/resume"
+                                       "rd"  "purpose-toggle-window"
                                        "s"   "search/symbol"
                                        "sa"  "ag"
                                        "sg"  "grep"
@@ -1118,4 +1120,3 @@ If FRAME is nil, it defaults to the selected frame."
 
 (spacemacs/set-leader-keys "TB"
   'spacemacs/scale-background-transparency-transient-state/spacemacs/toggle-background-transparency)
-
