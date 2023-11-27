@@ -27,6 +27,7 @@
     bookmark
     helm
     helm-ag
+    helm-comint
     helm-descbinds
     (helm-ls-git :toggle (configuration-layer/layer-used-p 'git))
     helm-make
@@ -209,6 +210,11 @@
         (kbd "RET") 'spacemacs/helm-find-files-windows)
       (define-key helm-find-files-map
         (kbd "RET") 'spacemacs/helm-find-files-windows))))
+
+(defun helm/init-helm-comint ()
+  (use-package helm-comint
+    :defer (spacemacs/defer)
+    :after helm))
 
 (defun helm/init-helm-ag ()
   (use-package helm-ag

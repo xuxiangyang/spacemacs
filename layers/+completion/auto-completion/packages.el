@@ -23,17 +23,17 @@
 
 (defconst auto-completion-packages
       '(
-        auto-yasnippet
-        auto-complete
-        ac-ispell
-        company
+        (auto-yasnippet :toggle (not (eq auto-completion-front-end 'company)))
+        (auto-complete :toggle (not (eq auto-completion-front-end 'company)))
+        (ac-ispell :toggle (not (eq auto-completion-front-end 'company)))
+        (company :toggle (eq auto-completion-front-end 'company))
         (company-posframe :toggle auto-completion-use-company-posframe)
         (company-box :toggle auto-completion-use-company-box)
         (company-quickhelp :toggle auto-completion-enable-help-tooltip)
         (company-statistics :toggle auto-completion-enable-sort-by-usage)
         counsel
-        fuzzy
-        (helm-company :requires helm)
+        (fuzzy :toggle (not (eq auto-completion-front-end 'company)))
+        (helm-company :requires helm :toggle (eq auto-completion-front-end 'company))
         (helm-c-yasnippet :requires helm)
         hippie-exp
         (ivy-yasnippet :requires ivy)
@@ -160,11 +160,14 @@
     :hook '(company-mode . company-box-mode)
     :commands 'company-box-doc-manually
     :custom
-    (company-box-backends-colors nil)
     (company-box-max-candidates 1000)
     (company-box-doc-enable nil)
     (company-box-icons-alist 'company-box-icons-all-the-icons)
-    (company-box-icons-all-the-icons
+    :init
+    :config
+    (spacemacs|hide-lighter company-box-mode)
+    (setq company-box-backends-colors nil)
+    (setq company-box-icons-all-the-icons
      `((Unknown . ,(all-the-icons-octicon "file-text" :height 0.8 :v-adjust -0.05))
        (Text . ,(all-the-icons-faicon "file-text-o" :height 0.8 :v-adjust -0.0575))
        (Method . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.0575))
@@ -192,9 +195,6 @@
        (Operator . ,(all-the-icons-faicon "tag" :height 0.8 :v-adjust -0.0575))
        (TypeParameter . ,(all-the-icons-faicon "cog" :height 0.8 :v-adjust -0.0575))
        (Template . ,(all-the-icons-octicon "file-code" :height 0.8 :v-adjust -0.05))))
-    :init
-    :config
-    (spacemacs|hide-lighter company-box-mode)
     (add-hook 'company-box-selection-hook
               (lambda (selection frame) (company-box-doc--hide frame)))
     (cl-case auto-completion-enable-help-tooltip
@@ -275,6 +275,7 @@
     :init
     ;; We don't want undefined variable errors
     (defvar yas-global-mode nil)
+    (defvar yas-snippet-dirs nil)
     (setq yas-triggers-in-field t
           yas-wrap-around-region t
           helm-yas-display-key-on-candidate t)
@@ -302,7 +303,6 @@
                                   dotspacemacs-directory)))
                 (when (file-accessible-directory-p snippet-dir)
                   snippet-dir)))))
-      (setq yas-snippet-dirs nil)
       ;; ~/.emacs.d/layers/auto-completion/snippets
       (add-to-list 'yas-snippet-dirs spacemacs-layer-snippets-dir)
       ;; ~/.emacs.d/private/snippets

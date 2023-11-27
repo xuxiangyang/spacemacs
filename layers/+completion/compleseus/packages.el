@@ -54,7 +54,8 @@
         ("/" spacemacs/compleseus-search-projectile-auto :exit t)))))
 
 (defun compleseus/post-init-imenu ()
-  (spacemacs/set-leader-keys "ji" 'spacemacs/consult-jump-in-buffer))
+  (spacemacs/set-leader-keys "ji" 'spacemacs/consult-jump-in-buffer)
+  (spacemacs/set-leader-keys "sj" 'spacemacs/consult-jump-in-buffer))
 
 (defun compleseus/init-marginalia ()
   (use-package marginalia
@@ -101,7 +102,6 @@
            ("C-M-#" . consult-register)
            ;; Other custom bindings
            ("M-y" . consult-yank-pop)                ;; orig. yank-pop
-           ("<help> a" . consult-apropos)            ;; orig. apropos-command
            ;; M-g bindings (goto-map)
            ("M-g e" . consult-compile-error)
            ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
@@ -119,7 +119,7 @@
            ("M-s G" . consult-git-grep)
            ("M-s r" . consult-ripgrep)
            ("M-s l" . consult-line)
-           ("M-s m" . consult-multi-occur)
+           ("M-s m" . consult-line-multi)
            ("M-s k" . consult-keep-lines)
            ("M-s u" . consult-focus-lines)
            ;; Isearch integration
@@ -148,7 +148,8 @@
       "ff" #'spacemacs/compleseus-find-file
       "fL" #'consult-locate
       "fr" #'consult-recent-file
-      "hda" #'consult-apropos
+      "hda" #'apropos-command
+      "hdm" #'describe-mode
       "jm" #'consult-mark
       "jM" #'consult-global-mark
       "sb" #'consult-line-multi
@@ -258,21 +259,25 @@
     (("M-o" . embark-act)         ;; pick some comfortable binding
      ("C-;" . embark-dwim)        ;; good alternative: M-.
      ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-
     :init
     (spacemacs/set-leader-keys "?" #'embark-bindings)
     ;; this gets you the available-key preview minibuffer popup
     (setq prefix-help-command #'embark-prefix-help-command
           ;; don't use C-h for paging, instead `describe-prefix-bindings`.
           which-key-use-C-h-commands nil)
-
     ;; same key binding as ivy-occur
     (define-key minibuffer-local-map (kbd "C-c C-o") #'embark-export)
     (define-key minibuffer-local-map (kbd "C-c C-l") #'embark-collect)
-
+    ;; mimic action key bindings from helm
+    (define-key minibuffer-local-map (kbd "C-z") #'spacemacs/embark-action-completing-read)
+    (define-key minibuffer-local-map (kbd "C-c C-e") #'spacemacs/consult-edit)
+    ;; which keys nice display
+    (which-key-add-keymap-based-replacements minibuffer-local-map "C-c C-o" "Embark export")
+    (which-key-add-keymap-based-replacements minibuffer-local-map "C-c C-l" "Embark collect")
+    (which-key-add-keymap-based-replacements minibuffer-local-map "C-c C-e" "Edit buffer")
+    (which-key-add-keymap-based-replacements minibuffer-local-map "C-z" "Embark actions...")
     :config
     (define-key embark-file-map "s" 'spacemacs/compleseus-search-from)
-
     ;; which key integration setup
     ;; https://github.com/oantolin/embark/wiki/Additional-Configuration#use-which-key-like-a-key-menu-prompt
     (setq embark-indicators
@@ -422,21 +427,18 @@
         "sl" 'vertico-repeat-last
         "sL" 'vertico-repeat-select)))
 
-(defun spacemacs/compleseus-wgrep-change-to-wgrep-mode ()
-  (interactive)
-  (wgrep-change-to-wgrep-mode)
-  (evil-normal-state))
-
 (defun compleseus/post-init-grep ()
   (spacemacs/set-leader-keys-for-major-mode 'grep-mode
-    "w" 'spacemacs/compleseus-wgrep-change-to-wgrep-mode
-    "s" 'wgrep-save-all-buffers))
+    "w" 'spacemacs/compleseus-grep-change-to-wgrep-mode))
 
 (defun compleseus/init-wgrep ()
-  (evil-define-key 'normal wgrep-mode-map ",," 'wgrep-finish-edit)
-  (evil-define-key 'normal wgrep-mode-map ",c" 'wgrep-finish-edit)
-  (evil-define-key 'normal wgrep-mode-map ",a" 'wgrep-abort-changes)
-  (evil-define-key 'normal wgrep-mode-map ",k" 'wgrep-abort-changes))
+  (add-hook 'spacemacs-editing-style-hook #'spacemacs//set-initial-grep-state)
+  (evil-define-key 'normal wgrep-mode-map ",," #'spacemacs/wgrep-finish-edit)
+  (evil-define-key 'normal wgrep-mode-map ",c" #'spacemacs/wgrep-finish-edit)
+  (evil-define-key 'normal wgrep-mode-map ",a" #'spacemacs/wgrep-abort-changes)
+  (evil-define-key 'normal wgrep-mode-map ",k" #'spacemacs/wgrep-abort-changes)
+  (evil-define-key 'normal wgrep-mode-map ",q" #'spacemacs/wgrep-abort-changes-and-quit)
+  (evil-define-key 'normal wgrep-mode-map ",s" #'spacemacs/wgrep-save-changes-and-quit))
 
 (defun compleseus/init-compleseus-spacemacs-help ()
   (use-package compleseus-spacemacs-help
