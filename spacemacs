@@ -30,7 +30,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(protobuf
      (javascript :variables
                  javascript-backend 'lsp
                  javascript-import-tool 'import-js
@@ -76,7 +76,7 @@ values."
           sql-capitalize-keywords t
           sql-backend nil
           sql-auto-indent nil
-          sqlfmt-executable "/Users/xxy/.emacs.d/private/bin/sqlfmt"
+          sqlfmt-executable "~/.emacs.d/private/bin/sqlfmt"
           )
      (helm :variables
            helm-enable-auto-resize t
@@ -178,6 +178,9 @@ values."
           )
      (c-c++ :variables
            c-c++-backend 'lsp-clangd
+           c-c++-enable-google-style t
+           c-c++-enable-auto-newline t
+           c-c++-adopt-subprojects t
            )
      (java :variables
            )
@@ -195,6 +198,7 @@ values."
            lsp-dart-sdk-dir "~/Documents/flutter_project/flutter/bin/cache/dart-sdk/"
            )
      imenu-list
+     protoc
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
@@ -207,6 +211,7 @@ values."
                                       reveal-in-osx-finder
                                       exec-path-from-shell
                                       company-tabnine
+                                      flycheck-projectile
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '(
@@ -461,10 +466,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;    ("gnu-cn"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")
   ;    ("nongnu"   . "https://elpa.nongnu.org/nongnu/")
   ;    ))
-  (setq url-proxy-services
-        '(("no_proxy" . "^\\(localhost\\|127.0.0.1\\|10.*\\)")
-          ("http" . "127.0.0.1:7890")
-          ("https" . "127.0.0.1:7890")))
+;  (setq url-proxy-services
+;        '(("no_proxy" . "^\\(localhost\\|127.0.0.1\\|10.*\\)")
+;          ("http" . "127.0.0.1:7890")
+;          ("https" . "127.0.0.1:7890")))
 
   (if (daemonp)
       (progn
@@ -513,6 +518,18 @@ you should place your code here."
   (setq auto-save-mode nil)
   (setq auto-save-default nil)
   (setq create-lockfiles nil)
+
+  ;; tmp fix https://github.com/syl20bnr/spacemacs/issues/16200
+  (setq helm-ag-use-grep-ignore-list nil)
+
+  ;; flycheck-projectile
+  (eval-after-load 'flycheck-projectile
+    '(add-to-list 'popwin:special-display-config
+                  `(,flycheck-projectile-error-list-buffer
+                    :regexp nil :dedicated t :position bottom :stick t
+                    :noselect nil)
+                  )
+    )
 
   ;; golang
   (eval-after-load 'go-mode
@@ -737,7 +754,7 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol t)
  '(ibuffer-default-shrink-to-minimum-size t)
  '(package-selected-packages
-   '(powerline-evil gnu-elpa-keyring-update web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode web-completion-data web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc dash-functional tern coffee-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode thrift projectile-rails inflections feature-mode wgrep smex ivy-hydra counsel-projectile counsel swiper ivy xclip go-guru go-eldoc company-go go-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest enh-ruby-mode chruby bundler inf-ruby unfill smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck mmm-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-lido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(protobuf-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode web-completion-data web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc dash-functional tern coffee-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode thrift projectile-rails inflections feature-mode wgrep smex ivy-hydra counsel-projectile counsel swiper ivy xclip go-guru go-eldoc company-go go-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest enh-ruby-mode chruby bundler inf-ruby unfill smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck mmm-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-lido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(package-selected-packagess
    '(typescript-mode import-js grizzl add-node-modules-path web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode thrift projectile-rails inflections feature-mode wgrep smex ivy-hydra counsel-projectile counsel swiper ivy xclip go-guru go-eldoc company-go go-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest enh-ruby-mode chruby bundler inf-ruby unfill smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flycheck mmm-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-lido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(warning-minimum-level :error)
